@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Dữ liệu đang có : <a href="" class="data"></a></h1>
+    <br>
+    <button class="btn"><i class="plus">Cộng</i></button>
+    <button class="btn"><i class="minus">Trừ</i></button>
+    <!-- <script src="./script.js"></script> -->
+    <script>
+        // Đọc dữ liệu từ file data.txt
+        fetch('data.txt')
+          .then(response => response.text())
+          .then(data => {
+            // Lấy thẻ a và gán giá trị từ file data.txt
+            const linkElement = document.querySelector('.data');
+            linkElement.textContent = data;
+          });
+      
+        // Lấy thẻ a và nút cộng, trừ
+        const linkElement = document.querySelector('.data');
+        const plusButton = document.querySelector('.plus');
+        const minusButton = document.querySelector('.minus');
+      
+        // Xử lý sự kiện khi bấm nút cộng
+        plusButton.addEventListener('click', () => {
+          // Lấy giá trị hiện tại và cộng 1
+          let value = parseInt(linkElement.textContent);
+          value++;
+      
+          // Cập nhật giá trị trong thẻ a
+          linkElement.textContent = value;
+      
+          // Cập nhật dữ liệu trong file data.txt
+          fetch('data.txt', {
+            method: 'PUT', // Hoặc 'POST' nếu bạn muốn gửi dữ liệu lên server
+            body: value
+          });
+        });
+      
+        // Xử lý sự kiện khi bấm nút trừ
+        minusButton.addEventListener('click', () => {
+          // Lấy giá trị hiện tại và trừ 1
+          let value = parseInt(linkElement.textContent);
+          value--;
+      
+          // Cập nhật giá trị trong thẻ a
+          linkElement.textContent = value;
+      
+          // Cập nhật dữ liệu trong file data.txt
+          fetch('data.txt', {
+            method: 'PUT', // Hoặc 'POST' nếu bạn muốn gửi dữ liệu lên server
+            body: value
+          });
+        });
+      </script>
+</body>
+</html>
